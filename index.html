@@ -42,7 +42,7 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
 .rail{position:fixed;top:0;bottom:0;left:0;width:var(--rail);z-index:90;
   display:flex;flex-direction:column;align-items:center;justify-content:space-between;
   padding:22px 0;border-right:1px solid rgba(234,229,218,.08);
-  background:rgba(16,10,9,.55);backdrop-filter:blur(6px);
+  background:rgba(16,10,9,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
   opacity:0;animation:fade .8s ease 3.2s forwards}
 .rail__c{font-family:var(--mono);font-size:.7rem;color:var(--gold);letter-spacing:.1em}
 .rail__t{writing-mode:vertical-rl;font-family:var(--mono);font-size:.62rem;letter-spacing:.28em;
@@ -210,6 +210,73 @@ footer{padding:24px var(--pad) 34px;display:flex;justify-content:space-between;f
   .zoom img{transform:none}
   html{scroll-behavior:auto}
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE — iOS + Android
+   Touch devices have no hover. Everything hover-dependent gets a
+   touch equivalent, and the photographs get the whole screen width.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* iOS < 15.4 has no svh — fall back to vh */
+@supports not (height: 100svh){
+  .hero{height:100vh}
+  .plate{height:74vh}
+}
+
+/* no tap flash on iOS/Android */
+a,button{-webkit-tap-highlight-color:transparent}
+
+/* ── touch: nothing may depend on hover ── */
+@media (hover:none){
+  .f .x{opacity:1;transform:none;padding:26px 10px 9px}
+  .f .x .mono{font-size:.58rem;letter-spacing:.1em}
+  .me img{filter:none}
+  .roll__s .f img{filter:none;opacity:.92}
+  .ln .a{opacity:1}
+}
+
+/* ── phone nav: the name lives in the hero, so give the links the bar ── */
+@media (max-width:760px){
+  nav{padding:11px 14px;background:linear-gradient(to bottom,rgba(16,10,9,.95),rgba(16,10,9,.55) 70%,rgba(16,10,9,0))}
+  nav .id{display:none}
+  nav ul{display:flex;margin-left:0;width:100%;justify-content:space-between;gap:4px}
+  nav a{font-size:.58rem;letter-spacing:.07em;white-space:nowrap;padding:4px 2px}
+
+  /* a 26px blur across a full screen stutters on mid-range Android */
+  .hero__img img{animation-name:rackM}
+  .hero__strip{gap:6px 16px;margin-top:16px;padding-top:12px}
+  .hero__strip .mono{font-size:.6rem;letter-spacing:.1em}
+}
+@keyframes rackM{
+  0%  {transform:scale(1.08);filter:blur(12px) saturate(.4) brightness(.5)}
+  100%{transform:scale(1);filter:blur(0) saturate(1) brightness(.72)}
+}
+
+/* ── one column: the photograph is the product, give it the screen ── */
+@media (max-width:620px){
+  .grid{grid-template-columns:1fr;gap:10px;padding-bottom:64px}
+  .s-tall,.s-sq,.s-wide,.s-half,.s-full{grid-column:span 1}
+  .s-tall{aspect-ratio:3/4}
+  .s-sq{aspect-ratio:1/1}
+  .s-wide,.s-half,.s-full{aspect-ratio:3/2}
+  .plate{height:56vh;min-height:340px}
+  .intro{padding-top:34px;padding-bottom:24px}
+  .roll__s .f{flex:0 0 120px}
+  .kit li{padding:10px 0}
+  .kit span:last-child{font-size:.64rem}
+}
+
+/* ── lightbox on a phone ── */
+@media (max-width:700px){
+  .lb{padding:12px}
+  .lb img{max-height:68vh}
+  .lb .x{top:10px;right:10px;width:38px;height:38px}
+  .lb .nav{width:46px;height:46px;top:auto;bottom:12px;transform:none}
+  .lb .prev{left:12px}
+  .lb .next{right:12px}
+  .lb .cap{bottom:74px}
+}
+
 </style>
 </head>
 <body>
@@ -255,7 +322,7 @@ footer{padding:24px var(--pad) 34px;display:flex;justify-content:space-between;f
 
 <!-- ═══ I. POORAM ═══ -->
 <section class="body-of-work" id="pooram" data-title="Pooram">
-  <div class="plate zoom"><img src="images/pooram-8620.jpg" alt=""></div>
+  <div class="plate zoom"><img src="images/plate-8966.jpg" alt=""></div>
   <div class="intro">
     <div class="up">
       <p class="mono mono--gold">Body I</p>
@@ -273,7 +340,7 @@ footer{padding:24px var(--pad) 34px;display:flex;justify-content:space-between;f
 
 <!-- ═══ II. FACES ═══ -->
 <section class="body-of-work" id="faces" data-title="Faces">
-  <div class="plate zoom"><img src="images/faces-0937.jpg" alt=""></div>
+  <div class="plate zoom"><img src="images/plate-2571.jpg" alt=""></div>
   <div class="intro">
     <div class="up">
       <p class="mono mono--gold">Body II</p>
@@ -291,7 +358,7 @@ footer{padding:24px var(--pad) 34px;display:flex;justify-content:space-between;f
 
 <!-- ═══ III. NIGHT ═══ -->
 <section class="body-of-work" id="night" data-title="Night">
-  <div class="plate zoom"><img src="images/night-6981.jpg" alt=""></div>
+  <div class="plate zoom"><img src="images/plate-7177.jpg" alt=""></div>
   <div class="intro">
     <div class="up">
       <p class="mono mono--gold">Body III</p>
@@ -374,35 +441,35 @@ footer{padding:24px var(--pad) 34px;display:flex;justify-content:space-between;f
 
 <script>
 const POORAM = [
-{id:"IMG_8620",exif:"200mm \u00b7 f/2.8 \u00b7 1/320 \u00b7 ISO 320 \u00b7 A7 V",date:"April 2026",src:"images/pooram-8620.jpg"},
-{id:"IMG_8957",exif:"200mm \u00b7 f/2.8 \u00b7 1/100 \u00b7 ISO 1000 \u00b7 A7 V",date:"April 2026",src:"images/pooram-8957.jpg"},
-{id:"IMG_8624",exif:"116mm \u00b7 f/2.8 \u00b7 1/1000 \u00b7 ISO 160 \u00b7 A7 V",date:"April 2026",src:"images/pooram-8624.jpg"},
-{id:"IMG_8615",exif:"112mm \u00b7 f/3.2 \u00b7 1/250 \u00b7 ISO 100 \u00b7 A7 V",date:"April 2026",src:"images/pooram-8615.jpg"},
-{id:"IMG_9372",exif:"200mm \u00b7 f/5.6 \u00b7 1/125 \u00b7 ISO 2500 \u00b7 A7 V",date:"May 2026",src:"images/pooram-9372.jpg"},
-{id:"IMG_9290",exif:"178mm \u00b7 f/3.2 \u00b7 1/100 \u00b7 ISO 500 \u00b7 A7 V",date:"May 2026",src:"images/pooram-9290.jpg"},
-{id:"IMG_2094",exif:"200mm \u00b7 f/2.8 \u00b7 1/640 \u00b7 ISO 500 \u00b7 A7 V",date:"July 2026",src:"images/pooram-2094.jpg"},
-{id:"IMG_1929",exif:"200mm \u00b7 f/2.8 \u00b7 1/250 \u00b7 ISO 500 \u00b7 A7 V",date:"July 2026",src:"images/pooram-1929.jpg"},
-{id:"IMG_1956",exif:"122mm \u00b7 f/2.8 \u00b7 1/500 \u00b7 ISO 500 \u00b7 A7 V",date:"July 2026",src:"images/pooram-1956.jpg"},
-{id:"IMG_8423",exif:"131mm \u00b7 f/3.2 \u00b7 1/1600 \u00b7 ISO 100 \u00b7 A7 V",date:"April 2026",src:"images/pooram-8423.jpg"}
+{id:"IMG_6083",exif:"85mm \u00b7 f/1.6 \u00b7 1/640 \u00b7 ISO 100 \u00b7 A7 V",date:"March 2026",src:"images/f-6083.jpg"},
+{id:"IMG_8957",exif:"200mm \u00b7 f/2.8 \u00b7 1/100 \u00b7 ISO 1000 \u00b7 A7 V",date:"April 2026",src:"images/f-8957.jpg"},
+{id:"IMG_8624",exif:"116mm \u00b7 f/2.8 \u00b7 1/1000 \u00b7 ISO 160 \u00b7 A7 V",date:"April 2026",src:"images/f-8624.jpg"},
+{id:"IMG_8615",exif:"112mm \u00b7 f/3.2 \u00b7 1/250 \u00b7 ISO 100 \u00b7 A7 V",date:"April 2026",src:"images/f-8615.jpg"},
+{id:"IMG_9372",exif:"200mm \u00b7 f/5.6 \u00b7 1/125 \u00b7 ISO 2500 \u00b7 A7 V",date:"May 2026",src:"images/f-9372.jpg"},
+{id:"IMG_9290",exif:"178mm \u00b7 f/3.2 \u00b7 1/100 \u00b7 ISO 500 \u00b7 A7 V",date:"May 2026",src:"images/f-9290.jpg"},
+{id:"IMG_2094",exif:"200mm \u00b7 f/2.8 \u00b7 1/640 \u00b7 ISO 500 \u00b7 A7 V",date:"July 2026",src:"images/f-2094.jpg"},
+{id:"IMG_1929",exif:"200mm \u00b7 f/2.8 \u00b7 1/250 \u00b7 ISO 500 \u00b7 A7 V",date:"July 2026",src:"images/f-1929.jpg"},
+{id:"IMG_1956",exif:"122mm \u00b7 f/2.8 \u00b7 1/500 \u00b7 ISO 500 \u00b7 A7 V",date:"July 2026",src:"images/f-1956.jpg"},
+{id:"IMG_8423",exif:"131mm \u00b7 f/3.2 \u00b7 1/1600 \u00b7 ISO 100 \u00b7 A7 V",date:"April 2026",src:"images/f-8423.jpg"}
 ];
 const FACES  = [
-{id:"IMG_0937",exif:"85mm \u00b7 f/1.4 \u00b7 1/8000 \u00b7 ISO 100 \u00b7 A7 IV",date:"May 2025",src:"images/faces-0937.jpg"},
-{id:"IMG_0930",exif:"85mm \u00b7 f/1.4 \u00b7 1/320 \u00b7 ISO 200 \u00b7 A7 V",date:"June 2026",src:"images/faces-0930.jpg"},
-{id:"IMG_2567",exif:"85mm \u00b7 f/1.4 \u00b7 1/125 \u00b7 ISO 125 \u00b7 A7 IV",date:"January 2021",src:"images/faces-2567.jpg"},
-{id:"IMG_4337",exif:"85mm \u00b7 f/1.4 \u00b7 1/400 \u00b7 ISO 100 \u00b7 A7 II",date:"March 2025",src:"images/faces-4337.jpg"},
-{id:"IMG_7960",exif:"85mm \u00b7 f/1.4 \u00b7 1/320 \u00b7 ISO 320 \u00b7 A7 V",date:"April 2026",src:"images/faces-7960.jpg"},
-{id:"IMG_9043",exif:"85mm \u00b7 f/1.6 \u00b7 1/400 \u00b7 ISO 6400 \u00b7 A7 V",date:"March 2026",src:"images/faces-9043.jpg"},
-{id:"IMG_9793",exif:"85mm \u00b7 f/1.8 \u00b7 1/400 \u00b7 ISO 4000 \u00b7 A7 V",date:"March 2026",src:"images/faces-9793.jpg"},
-{id:"IMG_0943",exif:"85mm \u00b7 f/1.4 \u00b7 1/2000 \u00b7 ISO 320 \u00b7 A7 II",date:"January 2025",src:"images/faces-0943.jpg"}
+{id:"IMG_0937",exif:"85mm \u00b7 f/1.4 \u00b7 1/8000 \u00b7 ISO 100 \u00b7 A7 IV",date:"May 2025",src:"images/f-0937.jpg"},
+{id:"IMG_0930",exif:"85mm \u00b7 f/1.4 \u00b7 1/320 \u00b7 ISO 200 \u00b7 A7 V",date:"June 2026",src:"images/f-0930.jpg"},
+{id:"IMG_2567",exif:"85mm \u00b7 f/1.4 \u00b7 1/125 \u00b7 ISO 125 \u00b7 A7 IV",date:"January 2021",src:"images/f-2567.jpg"},
+{id:"IMG_4337",exif:"85mm \u00b7 f/1.4 \u00b7 1/400 \u00b7 ISO 100 \u00b7 A7 II",date:"March 2025",src:"images/f-4337.jpg"},
+{id:"IMG_7960",exif:"85mm \u00b7 f/1.4 \u00b7 1/320 \u00b7 ISO 320 \u00b7 A7 V",date:"April 2026",src:"images/f-7960.jpg"},
+{id:"IMG_9043",exif:"85mm \u00b7 f/1.6 \u00b7 1/400 \u00b7 ISO 6400 \u00b7 A7 V",date:"March 2026",src:"images/f-9043.jpg"},
+{id:"IMG_9793",exif:"85mm \u00b7 f/1.8 \u00b7 1/400 \u00b7 ISO 4000 \u00b7 A7 V",date:"March 2026",src:"images/f-9793.jpg"},
+{id:"IMG_0943",exif:"85mm \u00b7 f/1.4 \u00b7 1/2000 \u00b7 ISO 320 \u00b7 A7 II",date:"January 2025",src:"images/f-0943.jpg"}
 ];
 const NIGHT  = [
-{id:"IMG_6981",exif:"85mm \u00b7 f/1.8 \u00b7 1/640 \u00b7 ISO 250 \u00b7 A7 V",date:"March 2026",src:"images/night-6981.jpg"},
-{id:"IMG_6071",exif:"85mm \u00b7 f/1.6 \u00b7 1/320 \u00b7 ISO 125 \u00b7 A7 V",date:"March 2026",src:"images/night-6071.jpg"},
-{id:"IMG_6060",exif:"85mm \u00b7 f/1.4 \u00b7 1/500 \u00b7 ISO 125 \u00b7 A7 V",date:"March 2026",src:"images/night-6060.jpg"},
-{id:"IMG_6044",exif:"85mm \u00b7 f/1.6 \u00b7 1/640 \u00b7 ISO 100 \u00b7 A7 V",date:"March 2026",src:"images/night-6044.jpg"},
-{id:"IMG_6083",exif:"85mm \u00b7 f/1.6 \u00b7 1/640 \u00b7 ISO 100 \u00b7 A7 V",date:"March 2026",src:"images/night-6083.jpg"},
-{id:"IMG_6984",exif:"14mm \u00b7 f/1.8 \u00b7 1/320 \u00b7 ISO 400 \u00b7 A7 V",date:"March 2026",src:"images/night-6984.jpg"},
-{id:"IMG_7174",exif:"35mm \u00b7 f/2 \u00b7 1/640 \u00b7 ISO 6400 \u00b7 A7 V",date:"March 2026",src:"images/night-7174.jpg"}
+{id:"IMG_6981",exif:"85mm \u00b7 f/1.8 \u00b7 1/640 \u00b7 ISO 250 \u00b7 A7 V",date:"March 2026",src:"images/f-6981.jpg"},
+{id:"IMG_6071",exif:"85mm \u00b7 f/1.6 \u00b7 1/320 \u00b7 ISO 125 \u00b7 A7 V",date:"March 2026",src:"images/f-6071.jpg"},
+{id:"IMG_6060",exif:"85mm \u00b7 f/1.4 \u00b7 1/500 \u00b7 ISO 125 \u00b7 A7 V",date:"March 2026",src:"images/f-6060.jpg"},
+{id:"IMG_6044",exif:"85mm \u00b7 f/1.6 \u00b7 1/640 \u00b7 ISO 100 \u00b7 A7 V",date:"March 2026",src:"images/f-6044.jpg"},
+{id:"IMG_7178",exif:"35mm · f/2.8 · 1/640 · ISO 6400 · A7 V",date:"March 2026",src:"images/f-7178.jpg"},
+{id:"IMG_6984",exif:"14mm \u00b7 f/1.8 \u00b7 1/320 \u00b7 ISO 400 \u00b7 A7 V",date:"March 2026",src:"images/f-6984.jpg"},
+{id:"IMG_7174",exif:"35mm \u00b7 f/2 \u00b7 1/640 \u00b7 ISO 6400 \u00b7 A7 V",date:"March 2026",src:"images/f-7174.jpg"}
 ];
 
 const SPANS = {
@@ -468,7 +535,9 @@ secs.forEach(s => io2.observe(s));
 /* parallax on the plates */
 const plates = [...document.querySelectorAll('.plate')];
 let tick = false;
+const wantsParallax = window.innerWidth >= 900 && !matchMedia('(prefers-reduced-motion: reduce)').matches;
 window.addEventListener('scroll', () => {
+  if (!wantsParallax) return;
   if (tick) return; tick = true;
   requestAnimationFrame(() => {
     plates.forEach(p => {
@@ -495,6 +564,19 @@ document.getElementById('lbX').onclick = closeLB;
 document.getElementById('lbP').onclick = e => { e.stopPropagation(); step(-1); };
 document.getElementById('lbN').onclick = e => { e.stopPropagation(); step(1); };
 lb.addEventListener('click', e => { if (e.target === lb) closeLB(); });
+
+/* swipe the lightbox on touch */
+let tx = 0, ty = 0;
+lb.addEventListener('touchstart', e => {
+  tx = e.changedTouches[0].clientX; ty = e.changedTouches[0].clientY;
+}, {passive:true});
+lb.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  const dy = e.changedTouches[0].clientY - ty;
+  if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy)) step(dx < 0 ? 1 : -1);
+  else if (dy > 90 && Math.abs(dy) > Math.abs(dx)) closeLB();
+}, {passive:true});
+
 document.addEventListener('keydown', e => {
   if (!lb.classList.contains('open')) return;
   if (e.key === 'Escape') closeLB();
