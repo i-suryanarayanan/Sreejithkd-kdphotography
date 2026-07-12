@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sreejith KD — Photographer · KD Photography, Thrissur</title>
+<meta name="description" content="Sreejith KD — festival, ritual and portrait photographer from Thrissur, Kerala. Available for assignment.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,900&family=Karla:wght@400;700&family=DM+Mono:wght@400;500&family=Noto+Sans+Malayalam:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   SREEJITH KD — KD PHOTOGRAPHY
+   Palette sampled from his own negatives:
+   warm black #190F0F · burnt sienna #812D11 · temple gold #D58829
+   ═══════════════════════════════════════════════════════════════ */
+:root{
+  --night:#100A09;  --soot:#1B1311;  --ash:#3A2C26;
+  --dust:#8C8175;   --bone:#EAE5DA;
+  --ember:#9E3410;  --gold:#D58829;  --brass:#B7802F;
+
+  --display:'Fraunces',Georgia,serif;
+  --body:'Karla',system-ui,sans-serif;
+  --mono:'DM Mono',monospace;
+  --mal:'Noto Sans Malayalam',sans-serif;
+  --pad:clamp(20px,5vw,80px);
+  --rail:64px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--night);color:var(--bone);font-family:var(--body);font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;width:100%;height:100%;object-fit:cover}
+a{color:inherit;text-decoration:none}
+button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
+::selection{background:var(--gold);color:var(--night)}
+
+.mono{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dust)}
+.mono--gold{color:var(--gold)}
+.mal{font-family:var(--mal);font-weight:700}
+
+/* ── left rail: a camera's frame counter ── */
+.rail{position:fixed;top:0;bottom:0;left:0;width:var(--rail);z-index:90;
+  display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  padding:22px 0;border-right:1px solid rgba(234,229,218,.08);
+  background:rgba(16,10,9,.55);backdrop-filter:blur(6px);
+  opacity:0;animation:fade .8s ease 3.2s forwards}
+.rail__c{font-family:var(--mono);font-size:.7rem;color:var(--gold);letter-spacing:.1em}
+.rail__t{writing-mode:vertical-rl;font-family:var(--mono);font-size:.62rem;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--dust);transition:color .4s}
+.rail__d{width:5px;height:5px;border-radius:50%;background:var(--ember)}
+@media(max-width:900px){.rail{display:none} :root{--rail:0px}}
+body{padding-left:var(--rail)}
+
+/* ── top nav ── */
+nav{position:fixed;top:0;left:var(--rail);right:0;z-index:95;display:flex;align-items:center;gap:20px;
+  padding:16px var(--pad);background:linear-gradient(to bottom,rgba(16,10,9,.9),rgba(16,10,9,0));
+  opacity:0;animation:fade .8s ease 3.2s forwards}
+nav .id{font-family:var(--display);font-weight:900;font-size:1rem;letter-spacing:-.01em}
+nav .id em{font-style:normal;color:var(--gold)}
+nav ul{display:flex;gap:24px;list-style:none;margin-left:auto}
+nav a{font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dust);transition:color .25s}
+nav a:hover,nav a:focus-visible{color:var(--gold)}
+@media(max-width:760px){nav ul{display:none}}
+@keyframes fade{to{opacity:1}}
+
+/* ═══ HERO — the aperture opens to f/1.4 ═══ */
+.hero{position:relative;height:100svh;min-height:580px;overflow:hidden;background:var(--night)}
+.hero__img{position:absolute;inset:0;z-index:1}
+.hero__img img{
+  transform:scale(1.14);
+  filter:blur(26px) saturate(.35) brightness(.5);
+  animation:rack 2.6s cubic-bezier(.19,1,.22,1) .55s forwards;
+}
+@keyframes rack{
+  0%  {transform:scale(1.14);filter:blur(26px) saturate(.35) brightness(.5)}
+  55% {filter:blur(6px) saturate(.75) brightness(.62)}
+  100%{transform:scale(1);filter:blur(0) saturate(1) brightness(.72)}
+}
+/* the iris */
+.iris{position:absolute;inset:0;z-index:3;pointer-events:none}
+.iris polygon{transform-box:view-box;transform-origin:50px 50px;transform:scale(0) rotate(0deg);
+  animation:open 2.1s cubic-bezier(.62,0,.2,1) .35s forwards}
+@keyframes open{to{transform:scale(4.2) rotate(32deg)}}
+.hero::after{content:'';position:absolute;inset:0;z-index:4;pointer-events:none;
+  background:linear-gradient(to top,var(--night) 1%,rgba(16,10,9,.45) 42%,rgba(16,10,9,.1) 100%)}
+.hero__txt{position:absolute;z-index:6;left:var(--pad);right:var(--pad);bottom:clamp(38px,7vh,74px)}
+.hero__eye{opacity:0;animation:up .9s cubic-bezier(.16,1,.3,1) 2.15s forwards}
+.hero h1{font-family:var(--display);font-weight:900;font-size:clamp(2.9rem,11vw,9.5rem);line-height:.84;
+  letter-spacing:-.035em;margin:10px 0 0;opacity:0;transform:translateY(30px);
+  animation:up 1s cubic-bezier(.16,1,.3,1) 2.35s forwards}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero__strip{display:flex;flex-wrap:wrap;gap:8px 26px;align-items:center;margin-top:22px;padding-top:16px;
+  border-top:1px solid rgba(234,229,218,.16);opacity:0;animation:fade 1s ease 2.85s forwards}
+@keyframes up{to{opacity:1;transform:none}}
+.hero__cue{position:absolute;right:var(--pad);bottom:clamp(38px,7vh,74px);z-index:6;display:flex;align-items:center;gap:10px;
+  opacity:0;animation:fade 1s ease 3.4s forwards}
+.hero__cue i{display:block;width:1px;height:46px;background:var(--gold);transform-origin:top;animation:pull 2s ease-in-out infinite}
+@keyframes pull{0%,100%{transform:scaleY(.2);opacity:.3}50%{transform:scaleY(1);opacity:1}}
+@media(max-width:700px){.hero__cue{display:none}}
+
+/* ── reveal ── */
+.up{opacity:0;transform:translateY(30px);transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1s cubic-bezier(.22,1,.36,1)}
+.up.in{opacity:1;transform:none}
+.zoom{overflow:hidden}
+.zoom img{transform:scale(1.12);transition:transform 1.6s cubic-bezier(.22,1,.36,1),filter .7s ease}
+.zoom.in img{transform:scale(1)}
+
+/* ═══ BODY OF WORK ═══ */
+.body-of-work{position:relative}
+.plate{position:relative;height:76svh;min-height:440px;overflow:hidden}
+.plate img{filter:brightness(.5) saturate(.95);transform:scale(1.1)}
+.plate::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(16,10,9,.7),rgba(16,10,9,.35) 45%,var(--night))}
+.plate__cap{position:absolute;z-index:2;left:var(--pad);bottom:clamp(30px,5vh,54px);right:var(--pad)}
+.plate__cap .num{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;color:var(--gold)}
+.plate__cap .mal{display:block;font-size:clamp(1.6rem,4.4vw,2.8rem);line-height:1.25;color:var(--bone);margin:6px 0 2px}
+.plate__cap h2{font-family:var(--display);font-weight:900;font-size:clamp(1.9rem,6vw,4.6rem);line-height:.92;letter-spacing:-.03em}
+
+.intro{padding:clamp(44px,6vw,76px) var(--pad) clamp(28px,4vw,44px);display:grid;grid-template-columns:1fr 1.45fr;gap:clamp(24px,5vw,70px)}
+@media(max-width:860px){.intro{grid-template-columns:1fr;gap:20px}}
+.intro .lede{font-family:var(--display);font-weight:400;font-size:clamp(1.15rem,2vw,1.55rem);line-height:1.35;color:var(--bone)}
+.intro p{color:#B6ADA2;max-width:64ch}
+.intro p + p{margin-top:.85em}
+
+.grid{padding:0 var(--pad) clamp(74px,10vw,120px);display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(8px,1.2vw,16px)}
+@media(max-width:820px){.grid{grid-template-columns:repeat(2,1fr)}}
+.f{position:relative;overflow:hidden;background:var(--soot);cursor:zoom-in}
+.f img{filter:brightness(.9) saturate(.96);transition:transform 1.5s cubic-bezier(.22,1,.36,1),filter .6s ease}
+.f:hover img,.f:focus-visible img{filter:brightness(1.03) saturate(1.06);transform:scale(1.06)}
+.f:focus-visible{outline:1px solid var(--gold);outline-offset:3px}
+.f .x{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:34px 12px 11px;
+  background:linear-gradient(to top,rgba(16,10,9,.92),transparent);
+  opacity:0;transform:translateY(8px);transition:opacity .45s,transform .45s}
+.f:hover .x,.f:focus-visible .x{opacity:1;transform:none}
+.f .x .mono{display:block;color:rgba(234,229,218,.82)}
+.f .x .mono--gold{color:var(--gold)}
+/* spans */
+.s-tall{grid-column:span 2;aspect-ratio:2/3}
+.s-wide{grid-column:span 4;aspect-ratio:3/2}
+.s-half{grid-column:span 3;aspect-ratio:3/2}
+.s-sq  {grid-column:span 2;aspect-ratio:1/1}
+.s-full{grid-column:span 6;aspect-ratio:16/7}
+@media(max-width:820px){
+  .s-tall{grid-column:span 1;aspect-ratio:2/3}
+  .s-sq{grid-column:span 1;aspect-ratio:1/1}
+  .s-wide,.s-half,.s-full{grid-column:span 2;aspect-ratio:3/2}
+}
+
+/* ═══ INDEX — horizontal roll ═══ */
+.roll{padding:clamp(60px,8vw,100px) 0 clamp(70px,9vw,110px)}
+.roll__h{display:flex;align-items:baseline;gap:16px;padding:0 var(--pad) 20px}
+.roll__h h2{font-family:var(--display);font-weight:900;font-size:clamp(1.5rem,3.4vw,2.4rem);letter-spacing:-.02em}
+.roll__h .mono{margin-left:auto}
+.roll__s{display:flex;gap:6px;overflow-x:auto;padding:8px var(--pad);scroll-snap-type:x proximity;
+  background:var(--soot);border-top:1px solid rgba(234,229,218,.08);border-bottom:1px solid rgba(234,229,218,.08)}
+.roll__s::-webkit-scrollbar{height:5px}
+.roll__s::-webkit-scrollbar-thumb{background:var(--ash)}
+.roll__s .f{flex:0 0 clamp(140px,17vw,220px);aspect-ratio:2/3;scroll-snap-align:center}
+.roll__s .f img{filter:grayscale(.65) brightness(.72)}
+.roll__s .f:hover img{filter:grayscale(0) brightness(1)}
+
+/* ═══ GROUND ═══ */
+.ground{padding:clamp(70px,10vw,120px) var(--pad);display:grid;grid-template-columns:.85fr 1.3fr;gap:clamp(30px,6vw,88px);align-items:start}
+@media(max-width:880px){.ground{grid-template-columns:1fr}}
+.me{position:relative;overflow:hidden;aspect-ratio:3/4;background:var(--soot);margin-bottom:24px}
+.me img{filter:grayscale(.9) brightness(.9);transition:filter .9s ease}
+.ground:hover .me img{filter:grayscale(0) brightness(1)}
+.me figcaption{position:absolute;left:0;right:0;bottom:0;padding:34px 14px 12px;background:linear-gradient(to top,rgba(16,10,9,.92),transparent)}
+.kit{list-style:none}
+.kit li{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid rgba(234,229,218,.1)}
+.kit li:first-child{border-top:1px solid rgba(234,229,218,.1)}
+.kit span:last-child{font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;text-align:right;color:var(--bone)}
+.say h2{font-family:var(--display);font-weight:900;font-size:clamp(1.7rem,4vw,3rem);line-height:1;letter-spacing:-.03em;margin-bottom:24px}
+.say p{color:#B6ADA2;font-size:clamp(1rem,1.5vw,1.14rem);margin-bottom:1em;max-width:66ch}
+.say p:last-child{margin-bottom:0}
+.say strong{color:var(--bone);font-weight:700}
+.say .mal{color:var(--gold);font-size:1.15rem;display:block;margin-bottom:6px}
+
+/* ═══ HIRE ═══ */
+.hire{padding:clamp(60px,9vw,110px) var(--pad) clamp(40px,6vw,70px);border-top:1px solid rgba(234,229,218,.1)}
+.hire h2{font-family:var(--display);font-weight:900;font-size:clamp(2.1rem,8vw,6.4rem);line-height:.88;letter-spacing:-.035em;margin-bottom:34px}
+.hire h2 em{font-style:normal;color:var(--gold)}
+.ln{display:flex;align-items:center;gap:16px;padding:21px 2px;border-bottom:1px solid rgba(234,229,218,.1);transition:padding-left .4s,background .35s}
+.ln:first-of-type{border-top:1px solid rgba(234,229,218,.1)}
+.ln:hover,.ln:focus-visible{padding-left:18px;background:rgba(213,136,41,.06)}
+.ln .v{margin-left:auto;font-family:var(--mono);font-size:.85rem;color:var(--bone)}
+.ln .a{color:var(--gold);opacity:0;transition:opacity .3s}
+.ln:hover .a{opacity:1}
+footer{padding:24px var(--pad) 34px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+/* ═══ LIGHTBOX ═══ */
+.lb{position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center;
+  background:rgba(8,5,5,.975);padding:clamp(18px,4vw,54px)}
+.lb.open{display:flex;animation:fade .3s ease}
+.lb img{max-width:100%;max-height:84vh;width:auto;height:auto;object-fit:contain}
+.lb .cap{position:absolute;left:0;right:0;bottom:clamp(14px,3.5vh,30px);text-align:center;display:grid;gap:4px}
+.lb .x{position:absolute;top:20px;right:22px;width:42px;height:42px;border:1px solid rgba(234,229,218,.25);
+  transition:border-color .3s,color .3s}
+.lb .x:hover{border-color:var(--gold);color:var(--gold)}
+.lb .nav{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;font-size:1.4rem;
+  border:1px solid rgba(234,229,218,.18);transition:border-color .3s,color .3s}
+.lb .nav:hover{border-color:var(--gold);color:var(--gold)}
+.lb .prev{left:clamp(8px,2vw,26px)} .lb .next{right:clamp(8px,2vw,26px)}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .rail,nav,.hero__eye,.hero h1,.hero__strip,.hero__cue{opacity:1;transform:none}
+  .hero__img img{transform:none;filter:brightness(.72)}
+  .iris{display:none}
+  .up{opacity:1;transform:none}
+  .zoom img{transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<aside class="rail">
+  <span class="rail__c" id="counter">01</span>
+  <span class="rail__t" id="railTitle">Pooram</span>
+  <span class="rail__d"></span>
+</aside>
+
+<nav>
+  <div class="id">Sreejith <em>KD</em></div>
+  <ul>
+    <li><a href="#pooram">Pooram</a></li>
+    <li><a href="#faces">Faces</a></li>
+    <li><a href="#night">Night</a></li>
+    <li><a href="#ground">Ground</a></li>
+    <li><a href="#hire">Hire</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<header class="hero">
+  <div class="hero__img"><img src="images/hero.jpg" alt="Temple elephant at a Kerala festival, photographed by Sreejith KD"></div>
+  <svg class="iris" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs><mask id="ir">
+      <rect width="100" height="100" fill="#fff"/>
+      <polygon points="50,20 76,35 76,65 50,80 24,65 24,35" fill="#000"/>
+    </mask></defs>
+    <rect width="100" height="100" fill="#100A09" mask="url(#ir)"/>
+  </svg>
+  <div class="hero__txt">
+    <p class="mono mono--gold hero__eye">KD Photography · Thrissur, Kerala</p>
+    <h1>Sreejith <em>KD</em></h1>
+    <div class="hero__strip">
+      <span class="mono">Festival · Ritual · Portrait</span>
+      <span class="mono">200mm · f/2.8 · 1/320 · ISO 320 · A7 V</span>
+      <span class="mono mono--gold">Available for assignment</span>
+    </div>
+  </div>
+  <div class="hero__cue"><span class="mono">Scroll</span><i></i></div>
+</header>
+
+<!-- ═══ I. POORAM ═══ -->
+<section class="body-of-work" id="pooram" data-title="Pooram">
+  <div class="plate zoom"><img src="images/pooram-8620.jpg" alt=""></div>
+  <div class="intro">
+    <div class="up">
+      <p class="mono mono--gold">Body I</p>
+      <p class="mal" style="font-size:clamp(1.6rem,4.4vw,2.6rem);line-height:1.3;margin:4px 0 2px">പൂരം</p>
+      <h2 style="font-family:var(--display);font-weight:900;font-size:clamp(1.8rem,4.6vw,3.4rem);line-height:.95;letter-spacing:-.03em">Pooram</h2>
+      <p class="mono" style="margin-top:12px">Thrissur · 2026 · 70–200mm</p>
+    </div>
+    <div class="up">
+      <p class="lede">Ten thousand people, no lighting, no second take. At 200mm and f/2.8 the crowd falls away and there is only the animal, the gold, the drummer's hand.</p>
+      <p style="margin-top:16px">The festival is not a subject you arrange. It happens at its own speed, in its own dark, and it does not wait. What I do is stand in the one place where the light will land, and hold the long lens open, and wait for the frame to come to me.</p>
+    </div>
+  </div>
+  <div class="grid" id="g_pooram"></div>
+</section>
+
+<!-- ═══ II. FACES ═══ -->
+<section class="body-of-work" id="faces" data-title="Faces">
+  <div class="plate zoom"><img src="images/faces-0937.jpg" alt=""></div>
+  <div class="intro">
+    <div class="up">
+      <p class="mono mono--gold">Body II</p>
+      <p class="mal" style="font-size:clamp(1.6rem,4.4vw,2.6rem);line-height:1.3;margin:4px 0 2px">മുഖങ്ങൾ</p>
+      <h2 style="font-family:var(--display);font-weight:900;font-size:clamp(1.8rem,4.6vw,3.4rem);line-height:.95;letter-spacing:-.03em">Faces</h2>
+      <p class="mono" style="margin-top:12px">85mm · f/1.4 · wide open</p>
+    </div>
+    <div class="up">
+      <p class="lede">One lens. One stop. Everything behind the eyes goes to nothing.</p>
+      <p style="margin-top:16px">I shoot portraits with the 85 at f/1.4 because it is the closest a camera comes to how attention actually works — one face, sharp, and the entire world around it soft and unimportant. I do not light them. I find where the light already is and I put the person there.</p>
+    </div>
+  </div>
+  <div class="grid" id="g_faces"></div>
+</section>
+
+<!-- ═══ III. NIGHT ═══ -->
+<section class="body-of-work" id="night" data-title="Night">
+  <div class="plate zoom"><img src="images/night-6981.jpg" alt=""></div>
+  <div class="intro">
+    <div class="up">
+      <p class="mono mono--gold">Body III</p>
+      <p class="mal" style="font-size:clamp(1.6rem,4.4vw,2.6rem);line-height:1.3;margin:4px 0 2px">രാത്രി</p>
+      <h2 style="font-family:var(--display);font-weight:900;font-size:clamp(1.8rem,4.6vw,3.4rem);line-height:.95;letter-spacing:-.03em">Night</h2>
+      <p class="mono" style="margin-top:12px">ISO 6400 · fire · no flash</p>
+    </div>
+    <div class="up">
+      <p class="lede">Most of what I photograph happens between midnight and first light.</p>
+      <p style="margin-top:16px">Kerala's rituals belong to the dark. I have never used a flash at one — it would be a lie, and it would stop the thing I came to see. So I work at ISO 6400 with the lens wide open and let the fire do what fire does. The grain is not a fault. It is the room.</p>
+    </div>
+  </div>
+  <div class="grid" id="g_night"></div>
+</section>
+
+<!-- ═══ INDEX ═══ -->
+<section class="roll">
+  <div class="roll__h up">
+    <h2>Index</h2>
+    <p class="mono">Every frame · drag to scroll</p>
+  </div>
+  <div class="roll__s" id="rollStrip"></div>
+</section>
+
+<!-- ═══ GROUND ═══ -->
+<section class="ground" id="ground">
+  <div class="up">
+    <figure class="me">
+      <img src="images/sreejith.jpg" alt="Sreejith KD photographing at a temple festival at first light">
+      <figcaption><span class="mono">Sreejith KD, working. Shot by a friend.</span></figcaption>
+    </figure>
+    <ul class="kit">
+      <li><span>Studio</span><span>KD Photography</span></li>
+      <li><span>Base</span><span>Thrissur, Kerala</span></li>
+      <li><span>Body</span><span>Sony A7 V</span></li>
+      <li><span>Glass</span><span>85mm f/1.4 GM · 70–200mm f/2.8</span></li>
+      <li><span>Also</span><span>35mm f/1.4 GM · 14mm f/1.8 GM</span></li>
+      <li><span>Method</span><span>Available light · wide open · no flash</span></li>
+      <li><span>Languages</span><span>Malayalam · English</span></li>
+    </ul>
+  </div>
+  <div class="say up">
+    <h2>Ground</h2>
+    <p><span class="mal">തൃശ്ശൂർ</span><strong>I am from Thrissur, which means the festival was never an assignment. It was the calendar.</strong></p>
+    <p>I did not come to this through a studio or an apprenticeship. There was no one to hand me a first job. What there was, instead, was a place where the most photographed event in Kerala happens every year at the end of my road — and years in which I could not afford to be anywhere near it with the right lens.</p>
+    <p>So I learned it the slow way. Standing in the same spots. Watching where the light lands at four in the morning. Learning which mahout will let you close and which will not. That is not a technique you can buy, and it is the only reason my frames are where they are.</p>
+    <p>I work at the long end, wide open, in the dark, without flash. I am after the one face the crowd is hiding.</p>
+    <p><strong>Open to staff, assistant, editorial and assignment work.</strong> Happy to shoot a test.</p>
+  </div>
+</section>
+
+<!-- ═══ HIRE ═══ -->
+<section class="hire" id="hire">
+  <h2 class="up">Send me<br>somewhere <em>loud.</em></h2>
+  <div class="up">
+    <a class="ln" href="mailto:sreejithkd17797@gmail.com">
+      <span class="mono mono--gold">Email</span><span class="v">sreejithkd17797@gmail.com</span><span class="a">&#8599;</span>
+    </a>
+    <a class="ln" href="tel:+917592889141">
+      <span class="mono mono--gold">Phone</span><span class="v">+91 75928 89141</span><span class="a">&#8599;</span>
+    </a>
+    <a class="ln" href="https://instagram.com/sreejith_kd" target="_blank" rel="noopener">
+      <span class="mono mono--gold">Instagram</span><span class="v">@sreejith_kd &nbsp;·&nbsp; KD Photography</span><span class="a">&#8599;</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p class="mono">&copy; <span id="yr"></span> Sreejith KD &nbsp;·&nbsp; KD Photography, Thrissur</p>
+  <p class="mono">All frames &copy; the photographer</p>
+</footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photograph viewer">
+  <button class="x" id="lbX" aria-label="Close">&#10005;</button>
+  <button class="nav prev" id="lbP" aria-label="Previous">&#8249;</button>
+  <button class="nav next" id="lbN" aria-label="Next">&#8250;</button>
+  <img id="lbI" alt="">
+  <div class="cap"><span class="mono mono--gold" id="lbC"></span><span class="mono" id="lbE"></span></div>
+</div>
+
+<script>
+const POORAM = [
+{id:"IMG_8620",exif:"200mm \u00b7 f/2.8 \u00b7 1/320 \u00b7 ISO 320 \u00b7 A7 V",date:"April 2026",src:"images/pooram-8620.jpg"},
+{id:"IMG_8957",exif:"200mm \u00b7 f/2.8 \u00b7 1/100 \u00b7 ISO 1000 \u00b7 A7 V",date:"April 2026",src:"images/pooram-8957.jpg"},
+{id:"IMG_8624",exif:"116mm \u00b7 f/2.8 \u00b7 1/1000 \u00b7 ISO 160 \u00b7 A7 V",date:"April 2026",src:"images/pooram-8624.jpg"},
+{id:"IMG_8615",exif:"112mm \u00b7 f/3.2 \u00b7 1/250 \u00b7 ISO 100 \u00b7 A7 V",date:"April 2026",src:"images/pooram-8615.jpg"},
+{id:"IMG_9372",exif:"200mm \u00b7 f/5.6 \u00b7 1/125 \u00b7 ISO 2500 \u00b7 A7 V",date:"May 2026",src:"images/pooram-9372.jpg"},
+{id:"IMG_9290",exif:"178mm \u00b7 f/3.2 \u00b7 1/100 \u00b7 ISO 500 \u00b7 A7 V",date:"May 2026",src:"images/pooram-9290.jpg"},
+{id:"IMG_2094",exif:"200mm \u00b7 f/2.8 \u00b7 1/640 \u00b7 ISO 500 \u00b7 A7 V",date:"July 2026",src:"images/pooram-2094.jpg"},
+{id:"IMG_1929",exif:"200mm \u00b7 f/2.8 \u00b7 1/250 \u00b7 ISO 500 \u00b7 A7 V",date:"July 2026",src:"images/pooram-1929.jpg"},
+{id:"IMG_1956",exif:"122mm \u00b7 f/2.8 \u00b7 1/500 \u00b7 ISO 500 \u00b7 A7 V",date:"July 2026",src:"images/pooram-1956.jpg"},
+{id:"IMG_8423",exif:"131mm \u00b7 f/3.2 \u00b7 1/1600 \u00b7 ISO 100 \u00b7 A7 V",date:"April 2026",src:"images/pooram-8423.jpg"}
+];
+const FACES  = [
+{id:"IMG_0937",exif:"85mm \u00b7 f/1.4 \u00b7 1/8000 \u00b7 ISO 100 \u00b7 A7 IV",date:"May 2025",src:"images/faces-0937.jpg"},
+{id:"IMG_0930",exif:"85mm \u00b7 f/1.4 \u00b7 1/320 \u00b7 ISO 200 \u00b7 A7 V",date:"June 2026",src:"images/faces-0930.jpg"},
+{id:"IMG_2567",exif:"85mm \u00b7 f/1.4 \u00b7 1/125 \u00b7 ISO 125 \u00b7 A7 IV",date:"January 2021",src:"images/faces-2567.jpg"},
+{id:"IMG_4337",exif:"85mm \u00b7 f/1.4 \u00b7 1/400 \u00b7 ISO 100 \u00b7 A7 II",date:"March 2025",src:"images/faces-4337.jpg"},
+{id:"IMG_7960",exif:"85mm \u00b7 f/1.4 \u00b7 1/320 \u00b7 ISO 320 \u00b7 A7 V",date:"April 2026",src:"images/faces-7960.jpg"},
+{id:"IMG_9043",exif:"85mm \u00b7 f/1.6 \u00b7 1/400 \u00b7 ISO 6400 \u00b7 A7 V",date:"March 2026",src:"images/faces-9043.jpg"},
+{id:"IMG_9793",exif:"85mm \u00b7 f/1.8 \u00b7 1/400 \u00b7 ISO 4000 \u00b7 A7 V",date:"March 2026",src:"images/faces-9793.jpg"},
+{id:"IMG_0943",exif:"85mm \u00b7 f/1.4 \u00b7 1/2000 \u00b7 ISO 320 \u00b7 A7 II",date:"January 2025",src:"images/faces-0943.jpg"}
+];
+const NIGHT  = [
+{id:"IMG_6981",exif:"85mm \u00b7 f/1.8 \u00b7 1/640 \u00b7 ISO 250 \u00b7 A7 V",date:"March 2026",src:"images/night-6981.jpg"},
+{id:"IMG_6071",exif:"85mm \u00b7 f/1.6 \u00b7 1/320 \u00b7 ISO 125 \u00b7 A7 V",date:"March 2026",src:"images/night-6071.jpg"},
+{id:"IMG_6060",exif:"85mm \u00b7 f/1.4 \u00b7 1/500 \u00b7 ISO 125 \u00b7 A7 V",date:"March 2026",src:"images/night-6060.jpg"},
+{id:"IMG_6044",exif:"85mm \u00b7 f/1.6 \u00b7 1/640 \u00b7 ISO 100 \u00b7 A7 V",date:"March 2026",src:"images/night-6044.jpg"},
+{id:"IMG_6083",exif:"85mm \u00b7 f/1.6 \u00b7 1/640 \u00b7 ISO 100 \u00b7 A7 V",date:"March 2026",src:"images/night-6083.jpg"},
+{id:"IMG_6984",exif:"14mm \u00b7 f/1.8 \u00b7 1/320 \u00b7 ISO 400 \u00b7 A7 V",date:"March 2026",src:"images/night-6984.jpg"},
+{id:"IMG_7174",exif:"35mm \u00b7 f/2 \u00b7 1/640 \u00b7 ISO 6400 \u00b7 A7 V",date:"March 2026",src:"images/night-7174.jpg"}
+];
+
+const SPANS = {
+  pooram: ['s-wide','s-tall','s-half','s-half','s-full','s-sq','s-sq','s-sq','s-half','s-half'],
+  faces:  ['s-tall','s-wide','s-half','s-half','s-sq','s-sq','s-sq','s-half'],
+  night:  ['s-wide','s-tall','s-full','s-sq','s-sq','s-sq','s-half']
+};
+const PLACE = {
+  pooram: 'Thrissur, Kerala',
+  faces:  'Kerala',
+  night:  'Kerala'
+};
+
+let ALL = [];
+function build(key, arr){
+  const g = document.getElementById('g_' + key);
+  arr.forEach((f, i) => {
+    const gi = ALL.length; ALL.push(f);
+    const b = document.createElement('button');
+    b.className = 'f up zoom ' + (SPANS[key][i] || 's-sq');
+    b.setAttribute('aria-label', 'Open frame ' + f.id);
+    b.innerHTML = '<img src="' + f.src + '" alt="" loading="lazy">' +
+      '<span class="x"><span class="mono mono--gold">' + PLACE[key] + ' &middot; ' + f.date + '</span>' +
+      '<span class="mono">' + f.exif + '</span></span>';
+    b.addEventListener('click', () => openLB(gi));
+    g.appendChild(b);
+  });
+}
+build('pooram', POORAM); build('faces', FACES); build('night', NIGHT);
+
+/* index strip */
+const strip = document.getElementById('rollStrip');
+ALL.forEach((f, i) => {
+  const b = document.createElement('button');
+  b.className = 'f'; b.setAttribute('aria-label', 'Open frame ' + f.id);
+  b.innerHTML = '<img src="' + f.src + '" alt="" loading="lazy">';
+  b.addEventListener('click', () => openLB(i));
+  strip.appendChild(b);
+});
+
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* reveal */
+const io = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: .12 });
+document.querySelectorAll('.up, .zoom').forEach(el => io.observe(el));
+
+/* frame counter on the rail */
+const secs = [...document.querySelectorAll('.body-of-work')];
+const cEl = document.getElementById('counter'), tEl = document.getElementById('railTitle');
+const io2 = new IntersectionObserver(es => {
+  es.forEach(e => {
+    if (e.isIntersecting) {
+      const n = secs.indexOf(e.target) + 1;
+      cEl.textContent = String(n).padStart(2, '0');
+      tEl.textContent = e.target.dataset.title;
+    }
+  });
+}, { threshold: .35 });
+secs.forEach(s => io2.observe(s));
+
+/* parallax on the plates */
+const plates = [...document.querySelectorAll('.plate')];
+let tick = false;
+window.addEventListener('scroll', () => {
+  if (tick) return; tick = true;
+  requestAnimationFrame(() => {
+    plates.forEach(p => {
+      const r = p.getBoundingClientRect();
+      if (r.bottom > 0 && r.top < innerHeight) {
+        const img = p.querySelector('img');
+        img.style.transform = 'scale(1.1) translateY(' + (r.top * -0.06) + 'px)';
+      }
+    });
+    tick = false;
+  });
+}, { passive: true });
+
+/* lightbox */
+const lb = document.getElementById('lb'), lbI = document.getElementById('lbI'),
+      lbC = document.getElementById('lbC'), lbE = document.getElementById('lbE');
+let cur = 0, lastF = null;
+function paint(){ const f = ALL[cur]; lbI.src = f.src; lbI.alt = f.id; lbC.textContent = f.date; lbE.textContent = f.exif; }
+function openLB(i){ cur = i; lastF = document.activeElement; paint(); lb.classList.add('open');
+  document.body.style.overflow = 'hidden'; document.getElementById('lbX').focus(); }
+function closeLB(){ lb.classList.remove('open'); document.body.style.overflow = ''; if (lastF) lastF.focus(); }
+function step(d){ cur = (cur + d + ALL.length) % ALL.length; paint(); }
+document.getElementById('lbX').onclick = closeLB;
+document.getElementById('lbP').onclick = e => { e.stopPropagation(); step(-1); };
+document.getElementById('lbN').onclick = e => { e.stopPropagation(); step(1); };
+lb.addEventListener('click', e => { if (e.target === lb) closeLB(); });
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLB();
+  if (e.key === 'ArrowRight') step(1);
+  if (e.key === 'ArrowLeft') step(-1);
+});
+</script>
+</body>
+</html>
